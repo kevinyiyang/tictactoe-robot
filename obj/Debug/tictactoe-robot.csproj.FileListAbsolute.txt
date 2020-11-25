@@ -1,0 +1,10 @@
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe-robot.csprojAssemblyReference.cache
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe_robot.Form1.resources
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe_robot.Properties.Resources.resources
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe-robot.csproj.GenerateResource.cache
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe-robot.csproj.CoreCompileInputs.cache
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\bin\Debug\tictactoe-robot.exe.config
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\bin\Debug\tictactoe-robot.exe
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\bin\Debug\tictactoe-robot.pdb
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe-robot.exe
+A:\Kevin's Stuff\Homework\UBC\Year Five\MECH 423\Final Project\tictactoe-robot\tictactoe-robot\obj\Debug\tictactoe-robot.pdb
