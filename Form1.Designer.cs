@@ -47,15 +47,11 @@
             this.byte2Box = new System.Windows.Forms.TextBox();
             this.byte1Box = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.stopMotorButton = new System.Windows.Forms.Button();
             this.fullByteBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.pwm100Button = new System.Windows.Forms.Button();
-            this.pwm75Button = new System.Windows.Forms.Button();
-            this.pwm50Button = new System.Windows.Forms.Button();
             this.revRateBox = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -63,7 +59,6 @@
             this.rotCountBox = new System.Windows.Forms.TextBox();
             this.encBox5 = new System.Windows.Forms.TextBox();
             this.encBox4 = new System.Windows.Forms.TextBox();
-            this.pwm25Button = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.pwmBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -86,6 +81,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.OriginButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,6 +137,7 @@
             this.connectButton.TabIndex = 154;
             this.connectButton.Text = "Connect Serial";
             this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.Connect_Click);
             // 
             // COMComboBox
             // 
@@ -158,6 +155,7 @@
             this.sendDataButton.TabIndex = 152;
             this.sendDataButton.Text = "Send Bytes";
             this.sendDataButton.UseVisualStyleBackColor = true;
+            this.sendDataButton.Click += new System.EventHandler(this.SendDataButton_Click);
             // 
             // label4
             // 
@@ -244,15 +242,6 @@
             this.label15.Text = "DC Motor (X Axis)";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // stopMotorButton
-            // 
-            this.stopMotorButton.Location = new System.Drawing.Point(274, 220);
-            this.stopMotorButton.Name = "stopMotorButton";
-            this.stopMotorButton.Size = new System.Drawing.Size(131, 23);
-            this.stopMotorButton.TabIndex = 165;
-            this.stopMotorButton.Text = "Stop Motor";
-            this.stopMotorButton.UseVisualStyleBackColor = true;
-            // 
             // fullByteBox
             // 
             this.fullByteBox.Location = new System.Drawing.Point(11, 220);
@@ -298,33 +287,7 @@
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(343, 45);
             this.trackBar1.TabIndex = 160;
-            // 
-            // pwm100Button
-            // 
-            this.pwm100Button.Location = new System.Drawing.Point(275, 370);
-            this.pwm100Button.Name = "pwm100Button";
-            this.pwm100Button.Size = new System.Drawing.Size(131, 23);
-            this.pwm100Button.TabIndex = 182;
-            this.pwm100Button.Text = "100% PWM";
-            this.pwm100Button.UseVisualStyleBackColor = true;
-            // 
-            // pwm75Button
-            // 
-            this.pwm75Button.Location = new System.Drawing.Point(275, 339);
-            this.pwm75Button.Name = "pwm75Button";
-            this.pwm75Button.Size = new System.Drawing.Size(131, 23);
-            this.pwm75Button.TabIndex = 181;
-            this.pwm75Button.Text = "75% PWM";
-            this.pwm75Button.UseVisualStyleBackColor = true;
-            // 
-            // pwm50Button
-            // 
-            this.pwm50Button.Location = new System.Drawing.Point(275, 306);
-            this.pwm50Button.Name = "pwm50Button";
-            this.pwm50Button.Size = new System.Drawing.Size(131, 23);
-            this.pwm50Button.TabIndex = 180;
-            this.pwm50Button.Text = "50% PWM";
-            this.pwm50Button.UseVisualStyleBackColor = true;
+            this.trackBar1.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
             // 
             // revRateBox
             // 
@@ -383,15 +346,6 @@
             this.encBox4.Name = "encBox4";
             this.encBox4.Size = new System.Drawing.Size(96, 20);
             this.encBox4.TabIndex = 173;
-            // 
-            // pwm25Button
-            // 
-            this.pwm25Button.Location = new System.Drawing.Point(275, 277);
-            this.pwm25Button.Name = "pwm25Button";
-            this.pwm25Button.Size = new System.Drawing.Size(131, 23);
-            this.pwm25Button.TabIndex = 172;
-            this.pwm25Button.Text = "25% PWM";
-            this.pwm25Button.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -469,6 +423,7 @@
             this.runStepperNegativeButton.TabIndex = 189;
             this.runStepperNegativeButton.Text = "Run in Negative Direction";
             this.runStepperNegativeButton.UseVisualStyleBackColor = true;
+            this.runStepperNegativeButton.Click += new System.EventHandler(this.RunStepperNegativeButton_Click);
             // 
             // runStepperPositive
             // 
@@ -478,6 +433,7 @@
             this.runStepperPositive.TabIndex = 188;
             this.runStepperPositive.Text = "Run in Positive Direction";
             this.runStepperPositive.UseVisualStyleBackColor = true;
+            this.runStepperPositive.Click += new System.EventHandler(this.RunStepperPositive_Click);
             // 
             // stopStepperButton
             // 
@@ -487,6 +443,7 @@
             this.stopStepperButton.TabIndex = 187;
             this.stopStepperButton.Text = "Stop Motor";
             this.stopStepperButton.UseVisualStyleBackColor = true;
+            this.stopStepperButton.Click += new System.EventHandler(this.StopStepperButton_Click);
             // 
             // label21
             // 
@@ -506,15 +463,17 @@
             this.moveButton.TabIndex = 197;
             this.moveButton.Text = "Move";
             this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.MoveButton_Click);
             // 
             // moveYButton
             // 
-            this.moveYButton.Location = new System.Drawing.Point(676, 180);
+            this.moveYButton.Location = new System.Drawing.Point(676, 179);
             this.moveYButton.Name = "moveYButton";
             this.moveYButton.Size = new System.Drawing.Size(131, 23);
             this.moveYButton.TabIndex = 196;
             this.moveYButton.Text = "Move Y";
             this.moveYButton.UseVisualStyleBackColor = true;
+            this.moveYButton.Click += new System.EventHandler(this.MoveYButton_Click);
             // 
             // textBox1
             // 
@@ -555,6 +514,7 @@
             this.moveXButton.TabIndex = 191;
             this.moveXButton.Text = "Move X";
             this.moveXButton.UseVisualStyleBackColor = true;
+            this.moveXButton.Click += new System.EventHandler(this.MoveXButton_Click);
             // 
             // label19
             // 
@@ -566,11 +526,26 @@
             this.label19.Text = "Delta X";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // OriginButton
+            // 
+            this.OriginButton.Location = new System.Drawing.Point(828, 217);
+            this.OriginButton.Name = "OriginButton";
+            this.OriginButton.Size = new System.Drawing.Size(131, 23);
+            this.OriginButton.TabIndex = 198;
+            this.OriginButton.Text = "Return to Origin";
+            this.OriginButton.UseVisualStyleBackColor = true;
+            this.OriginButton.Click += new System.EventHandler(this.OriginButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1166, 571);
+            this.Controls.Add(this.OriginButton);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.moveYButton);
             this.Controls.Add(this.textBox1);
@@ -586,9 +561,6 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.encBox3);
-            this.Controls.Add(this.pwm100Button);
-            this.Controls.Add(this.pwm75Button);
-            this.Controls.Add(this.pwm50Button);
             this.Controls.Add(this.revRateBox);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -596,14 +568,12 @@
             this.Controls.Add(this.rotCountBox);
             this.Controls.Add(this.encBox5);
             this.Controls.Add(this.encBox4);
-            this.Controls.Add(this.pwm25Button);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.pwmBox);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.encBox2);
             this.Controls.Add(this.encBox1);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.stopMotorButton);
             this.Controls.Add(this.fullByteBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -654,15 +624,11 @@
         private System.Windows.Forms.TextBox byte2Box;
         private System.Windows.Forms.TextBox byte1Box;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button stopMotorButton;
         private System.Windows.Forms.TextBox fullByteBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button pwm100Button;
-        private System.Windows.Forms.Button pwm75Button;
-        private System.Windows.Forms.Button pwm50Button;
         private System.Windows.Forms.TextBox revRateBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -670,7 +636,6 @@
         private System.Windows.Forms.TextBox rotCountBox;
         private System.Windows.Forms.TextBox encBox5;
         private System.Windows.Forms.TextBox encBox4;
-        private System.Windows.Forms.Button pwm25Button;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox pwmBox;
         private System.Windows.Forms.Label label9;
@@ -693,6 +658,7 @@
         private System.Windows.Forms.Label label19;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button OriginButton;
     }
 }
 

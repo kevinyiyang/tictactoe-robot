@@ -15,16 +15,14 @@ namespace tictactoe_robot
     {
         ConcurrentQueue<Int32> dataQueue = new ConcurrentQueue<Int32>();
 
-        int dataState = 0;
+        
         int encoderUpper = 0;
         int encoderLower = 0;
 
         int position = 0;
 
         int rotationCount = 0;
-        int t = 0;
 
-        int newByte = 0;
 
         public Form1()
         {
@@ -227,81 +225,7 @@ namespace tictactoe_robot
             }
         }
 
-        private void SerialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
-        {
-            int bytesToRead = serialPort1.BytesToRead;
-
-            while (bytesToRead != 0)
-            {
-                newByte = serialPort1.ReadByte();
-
-                switch (dataState)
-                {
-                    case 0:
-                        if (newByte == 255)
-                        {
-                            //encBox1.Text = newByte.ToString();
-                            dataState = 1;
-                        }
-                        break;
-
-                    case 1:
-                        encoderUpper = newByte;
-                        //encBox2.Text = encoderUpper.ToString();
-                        dataState = 2;
-                        break;
-
-                    case 2:
-                        encoderLower = newByte;
-                        //encBox3.Text = encoderLower.ToString();
-                        dataState = 3;
-                        break;
-
-                    case 3:
-                        switch (newByte)
-                        {
-                            case 0:
-
-                                break;
-
-                            case 1:
-                                encoderLower = 255;
-
-                                break;
-
-                            case 2:
-                                encoderUpper = 255;
-
-                                break;
-
-                            case 3:
-                                encoderLower = 255;
-                                encoderUpper = 255;
-
-                                break;
-
-                        }
-
-                        //encBox4.Text = newByte.ToString();
-                        dataState = 4;
-                        break;
-
-                    case 4:
-                        rotationCount = newByte;
-                        dataState = 0;
-                        break;
-
-
-                    default:
-                        break;
-
-                }
-
-                // Check if there are still bytes to read
-                bytesToRead = serialPort1.BytesToRead;
-            }
-
-        }
+        
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
@@ -344,11 +268,6 @@ namespace tictactoe_robot
             revRateBox.Text = revRate.ToString();
 
 
-            //chart1.Series["Position"].Points.AddXY(t, position);
-            //chart2.Series["Rotation Rate"].Points.AddXY(trackBar1.Value, revRate);
-
-            t++;
-
         }
 
         private int ConvertToBinary(int num)
@@ -364,71 +283,6 @@ namespace tictactoe_robot
             result = num.ToString() + result;
 
             return (Convert.ToInt32(result));
-        }
-
-        private void Pwm25Button_Click(object sender, EventArgs e)
-        {
-            byte1Box.Text = "255";
-            byte2Box.Text = "0";
-            byte3Box.Text = "64";
-            byte4Box.Text = "0";
-            byte5Box.Text = "0";
-            byte6Box.Text = "0";
-            byte7Box.Text = "0";
-
-
-            SendBytes();
-        }
-
-        private void Pwm50Button_Click(object sender, EventArgs e)
-        {
-            byte1Box.Text = "255";
-            byte2Box.Text = "0";
-            byte3Box.Text = "128";
-            byte4Box.Text = "0";
-            byte5Box.Text = "0";
-            byte6Box.Text = "0";
-            byte7Box.Text = "0";
-
-            SendBytes();
-        }
-
-        private void Pwm75Button_Click(object sender, EventArgs e)
-        {
-            byte1Box.Text = "255";
-            byte2Box.Text = "0";
-            byte3Box.Text = "192";
-            byte4Box.Text = "0";
-            byte5Box.Text = "0";
-            byte6Box.Text = "0";
-            byte7Box.Text = "0";
-
-            SendBytes();
-        }
-
-        private void Pwm100Button_Click(object sender, EventArgs e)
-        {
-            byte1Box.Text = "255";
-            byte2Box.Text = "0";
-            byte3Box.Text = "0";
-            byte4Box.Text = "0";
-            byte5Box.Text = "3";
-            byte6Box.Text = "0";
-            byte7Box.Text = "0";
-
-            SendBytes();
-        }
-
-        private void StopMotorButton_Click(object sender, EventArgs e)
-        {
-            byte1Box.Text = "255";
-            byte2Box.Text = "9";
-            byte3Box.Text = "0";
-            byte4Box.Text = "0";
-            byte5Box.Text = "0";
-            byte6Box.Text = "0";
-            byte7Box.Text = "0";
-            SendBytes();
         }
 
         private void MoveXButton_Click(object sender, EventArgs e)
@@ -530,6 +384,13 @@ namespace tictactoe_robot
 
         private void MoveButton_Click(object sender, EventArgs e)
         {
+
+            MovePlatform(Convert.ToInt32(deltaXBox.Text), Convert.ToInt32(deltaYBox.Text));
+           
+        }
+
+        private void MovePlatform(int delta_x, int delta_y)
+        {
             int xDirection = 0;
             int yDirection = 0;
 
@@ -538,34 +399,27 @@ namespace tictactoe_robot
             byte4Box.Text = "0";
             byte5Box.Text = "0";
 
-            if (Convert.ToInt32(deltaXBox.Text) < 0)
-            {
-                byte6Box.Text = (2 * (-Convert.ToInt32(deltaXBox.Text))).ToString();
+            if (delta_x < 0)            {
+                byte6Box.Text = (2 * (-delta_x)).ToString();
                 xDirection = 0;
-
             }
 
-            else if (Convert.ToInt32(deltaXBox.Text) > 0)
+            else if (delta_x > 0)
             {
-                byte6Box.Text = (2 * (Convert.ToInt32(deltaXBox.Text))).ToString();
-
+                byte6Box.Text = (2 * (delta_x)).ToString();
                 xDirection = 1;
-
             }
 
 
-            if (Convert.ToInt32(deltaYBox.Text) < 0)
+            if (delta_y < 0)
             {
-                byte7Box.Text = (2 * (-Convert.ToInt32(deltaYBox.Text))).ToString();
-
+                byte7Box.Text = (2 * (-delta_y)).ToString();
                 yDirection = 0;
-
             }
 
-            else if (Convert.ToInt32(deltaYBox.Text) > 0)
+            else if (delta_y > 0)
             {
-                byte7Box.Text = (2 * (Convert.ToInt32(deltaYBox.Text))).ToString();
-
+                byte7Box.Text = (2 * (delta_y)).ToString();
                 yDirection = 1;
 
             }
@@ -614,11 +468,12 @@ namespace tictactoe_robot
 
             else
             {
-                int byte3Val = (int)((Math.Abs((Convert.ToDecimal(deltaXBox.Text)) / (Convert.ToDecimal(deltaYBox.Text)))) * 19 + 9);
+                int byte3Val = (int)((Math.Abs(delta_x)) / (int)(Math.Abs(delta_y)) * 19 + 9);
                 byte3Box.Text = byte3Val.ToString();
             }
 
             SendBytes();
         }
+
     }
 }
