@@ -47,26 +47,12 @@
             this.byte2Box = new System.Windows.Forms.TextBox();
             this.byte1Box = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.fullByteBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.revRateBox = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.rotCountBox = new System.Windows.Forms.TextBox();
-            this.encBox5 = new System.Windows.Forms.TextBox();
-            this.encBox4 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.pwmBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.encBox2 = new System.Windows.Forms.TextBox();
-            this.encBox1 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.encBox3 = new System.Windows.Forms.TextBox();
+            this.xPositionTextBox = new System.Windows.Forms.TextBox();
             this.runStepperNegativeButton = new System.Windows.Forms.Button();
             this.runStepperPositive = new System.Windows.Forms.Button();
             this.stopStepperButton = new System.Windows.Forms.Button();
@@ -82,7 +68,41 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.OriginButton = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.yPositionTextBox = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.drawTriangleButton = new System.Windows.Forms.Button();
+            this.readyTextBox = new System.Windows.Forms.TextBox();
+            this.drawSquareButton = new System.Windows.Forms.Button();
+            this.board0 = new System.Windows.Forms.PictureBox();
+            this.board1 = new System.Windows.Forms.PictureBox();
+            this.board2 = new System.Windows.Forms.PictureBox();
+            this.board5 = new System.Windows.Forms.PictureBox();
+            this.board4 = new System.Windows.Forms.PictureBox();
+            this.board3 = new System.Windows.Forms.PictureBox();
+            this.board8 = new System.Windows.Forms.PictureBox();
+            this.board7 = new System.Windows.Forms.PictureBox();
+            this.board6 = new System.Windows.Forms.PictureBox();
+            this.boardDisplay = new System.Windows.Forms.GroupBox();
+            this.currentImageBox = new System.Windows.Forms.PictureBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.debuggingTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board6)).BeginInit();
+            this.boardDisplay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.currentImageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // byte7Box
@@ -242,13 +262,6 @@
             this.label15.Text = "DC Motor (X Axis)";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // fullByteBox
-            // 
-            this.fullByteBox.Location = new System.Drawing.Point(11, 220);
-            this.fullByteBox.Name = "fullByteBox";
-            this.fullByteBox.Size = new System.Drawing.Size(44, 20);
-            this.fullByteBox.TabIndex = 164;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -289,135 +302,26 @@
             this.trackBar1.TabIndex = 160;
             this.trackBar1.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
             // 
-            // revRateBox
-            // 
-            this.revRateBox.Location = new System.Drawing.Point(131, 395);
-            this.revRateBox.Name = "revRateBox";
-            this.revRateBox.Size = new System.Drawing.Size(96, 20);
-            this.revRateBox.TabIndex = 179;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(128, 375);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 13);
-            this.label13.TabIndex = 178;
-            this.label13.Text = "Rev/Sec";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 375);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 13);
-            this.label12.TabIndex = 177;
-            this.label12.Text = "Position (in revolutions)";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(126, 310);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(80, 13);
-            this.label11.TabIndex = 176;
-            this.label11.Text = "Overflow Count";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // rotCountBox
-            // 
-            this.rotCountBox.Location = new System.Drawing.Point(126, 326);
-            this.rotCountBox.Name = "rotCountBox";
-            this.rotCountBox.Size = new System.Drawing.Size(44, 20);
-            this.rotCountBox.TabIndex = 175;
-            // 
-            // encBox5
-            // 
-            this.encBox5.Location = new System.Drawing.Point(9, 352);
-            this.encBox5.Name = "encBox5";
-            this.encBox5.Size = new System.Drawing.Size(96, 20);
-            this.encBox5.TabIndex = 174;
-            // 
-            // encBox4
-            // 
-            this.encBox4.Location = new System.Drawing.Point(9, 326);
-            this.encBox4.Name = "encBox4";
-            this.encBox4.Size = new System.Drawing.Size(96, 20);
-            this.encBox4.TabIndex = 173;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(123, 258);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(93, 13);
-            this.label10.TabIndex = 171;
-            this.label10.Text = "PWM Slider Value";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pwmBox
-            // 
-            this.pwmBox.Location = new System.Drawing.Point(126, 279);
-            this.pwmBox.Name = "pwmBox";
-            this.pwmBox.Size = new System.Drawing.Size(90, 20);
-            this.pwmBox.TabIndex = 170;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 258);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(76, 13);
-            this.label9.TabIndex = 169;
-            this.label9.Text = "Encoder Bytes";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // encBox2
-            // 
-            this.encBox2.Location = new System.Drawing.Point(59, 279);
-            this.encBox2.Name = "encBox2";
-            this.encBox2.Size = new System.Drawing.Size(44, 20);
-            this.encBox2.TabIndex = 168;
-            // 
-            // encBox1
-            // 
-            this.encBox1.Location = new System.Drawing.Point(9, 279);
-            this.encBox1.Name = "encBox1";
-            this.encBox1.Size = new System.Drawing.Size(44, 20);
-            this.encBox1.TabIndex = 167;
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(14, 462);
+            this.label17.Location = new System.Drawing.Point(448, 150);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(51, 13);
             this.label17.TabIndex = 185;
             this.label17.Text = "Current X";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label16
+            // xPositionTextBox
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(14, 439);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(80, 13);
-            this.label16.TabIndex = 184;
-            this.label16.Text = "Position Control";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // encBox3
-            // 
-            this.encBox3.Location = new System.Drawing.Point(9, 478);
-            this.encBox3.Name = "encBox3";
-            this.encBox3.Size = new System.Drawing.Size(49, 20);
-            this.encBox3.TabIndex = 183;
+            this.xPositionTextBox.Location = new System.Drawing.Point(505, 147);
+            this.xPositionTextBox.Name = "xPositionTextBox";
+            this.xPositionTextBox.Size = new System.Drawing.Size(49, 20);
+            this.xPositionTextBox.TabIndex = 183;
             // 
             // runStepperNegativeButton
             // 
-            this.runStepperNegativeButton.Location = new System.Drawing.Point(496, 83);
+            this.runStepperNegativeButton.Location = new System.Drawing.Point(496, 84);
             this.runStepperNegativeButton.Name = "runStepperNegativeButton";
             this.runStepperNegativeButton.Size = new System.Drawing.Size(150, 23);
             this.runStepperNegativeButton.TabIndex = 189;
@@ -427,7 +331,7 @@
             // 
             // runStepperPositive
             // 
-            this.runStepperPositive.Location = new System.Drawing.Point(840, 83);
+            this.runStepperPositive.Location = new System.Drawing.Point(840, 84);
             this.runStepperPositive.Name = "runStepperPositive";
             this.runStepperPositive.Size = new System.Drawing.Size(131, 23);
             this.runStepperPositive.TabIndex = 188;
@@ -437,7 +341,7 @@
             // 
             // stopStepperButton
             // 
-            this.stopStepperButton.Location = new System.Drawing.Point(676, 83);
+            this.stopStepperButton.Location = new System.Drawing.Point(676, 84);
             this.stopStepperButton.Name = "stopStepperButton";
             this.stopStepperButton.Size = new System.Drawing.Size(131, 23);
             this.stopStepperButton.TabIndex = 187;
@@ -448,7 +352,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(695, 50);
+            this.label21.Location = new System.Drawing.Point(695, 51);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(112, 13);
             this.label21.TabIndex = 186;
@@ -477,7 +381,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(516, 235);
+            this.textBox1.Location = new System.Drawing.Point(502, 220);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(44, 20);
             this.textBox1.TabIndex = 195;
@@ -526,8 +430,13 @@
             this.label19.Text = "Delta X";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // serialPort1
+            // 
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort1_DataReceived);
+            // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // OriginButton
@@ -540,11 +449,214 @@
             this.OriginButton.UseVisualStyleBackColor = true;
             this.OriginButton.Click += new System.EventHandler(this.OriginButton_Click);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(448, 185);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(51, 13);
+            this.label14.TabIndex = 200;
+            this.label14.Text = "Current Y";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // yPositionTextBox
+            // 
+            this.yPositionTextBox.Location = new System.Drawing.Point(505, 182);
+            this.yPositionTextBox.Name = "yPositionTextBox";
+            this.yPositionTextBox.Size = new System.Drawing.Size(49, 20);
+            this.yPositionTextBox.TabIndex = 199;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(558, 220);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(44, 20);
+            this.textBox2.TabIndex = 201;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(617, 220);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(44, 20);
+            this.textBox3.TabIndex = 202;
+            // 
+            // drawTriangleButton
+            // 
+            this.drawTriangleButton.Location = new System.Drawing.Point(13, 249);
+            this.drawTriangleButton.Name = "drawTriangleButton";
+            this.drawTriangleButton.Size = new System.Drawing.Size(131, 23);
+            this.drawTriangleButton.TabIndex = 203;
+            this.drawTriangleButton.Text = "Triangle";
+            this.drawTriangleButton.UseVisualStyleBackColor = true;
+            this.drawTriangleButton.Click += new System.EventHandler(this.DrawTriangleButton_Click);
+            // 
+            // readyTextBox
+            // 
+            this.readyTextBox.Location = new System.Drawing.Point(437, 220);
+            this.readyTextBox.Name = "readyTextBox";
+            this.readyTextBox.Size = new System.Drawing.Size(44, 20);
+            this.readyTextBox.TabIndex = 204;
+            // 
+            // drawSquareButton
+            // 
+            this.drawSquareButton.Location = new System.Drawing.Point(166, 249);
+            this.drawSquareButton.Name = "drawSquareButton";
+            this.drawSquareButton.Size = new System.Drawing.Size(131, 23);
+            this.drawSquareButton.TabIndex = 205;
+            this.drawSquareButton.Text = "Square";
+            this.drawSquareButton.UseVisualStyleBackColor = true;
+            this.drawSquareButton.Click += new System.EventHandler(this.DrawSquareButton_Click);
+            // 
+            // board0
+            // 
+            this.board0.Location = new System.Drawing.Point(11, 29);
+            this.board0.Name = "board0";
+            this.board0.Size = new System.Drawing.Size(30, 30);
+            this.board0.TabIndex = 206;
+            this.board0.TabStop = false;
+            // 
+            // board1
+            // 
+            this.board1.Location = new System.Drawing.Point(46, 29);
+            this.board1.Name = "board1";
+            this.board1.Size = new System.Drawing.Size(30, 30);
+            this.board1.TabIndex = 207;
+            this.board1.TabStop = false;
+            // 
+            // board2
+            // 
+            this.board2.Location = new System.Drawing.Point(82, 29);
+            this.board2.Name = "board2";
+            this.board2.Size = new System.Drawing.Size(30, 30);
+            this.board2.TabIndex = 208;
+            this.board2.TabStop = false;
+            // 
+            // board5
+            // 
+            this.board5.Location = new System.Drawing.Point(82, 65);
+            this.board5.Name = "board5";
+            this.board5.Size = new System.Drawing.Size(30, 30);
+            this.board5.TabIndex = 211;
+            this.board5.TabStop = false;
+            // 
+            // board4
+            // 
+            this.board4.Location = new System.Drawing.Point(46, 65);
+            this.board4.Name = "board4";
+            this.board4.Size = new System.Drawing.Size(30, 30);
+            this.board4.TabIndex = 210;
+            this.board4.TabStop = false;
+            // 
+            // board3
+            // 
+            this.board3.Location = new System.Drawing.Point(11, 65);
+            this.board3.Name = "board3";
+            this.board3.Size = new System.Drawing.Size(30, 30);
+            this.board3.TabIndex = 209;
+            this.board3.TabStop = false;
+            // 
+            // board8
+            // 
+            this.board8.Location = new System.Drawing.Point(82, 101);
+            this.board8.Name = "board8";
+            this.board8.Size = new System.Drawing.Size(30, 30);
+            this.board8.TabIndex = 214;
+            this.board8.TabStop = false;
+            // 
+            // board7
+            // 
+            this.board7.Location = new System.Drawing.Point(46, 101);
+            this.board7.Name = "board7";
+            this.board7.Size = new System.Drawing.Size(30, 30);
+            this.board7.TabIndex = 213;
+            this.board7.TabStop = false;
+            // 
+            // board6
+            // 
+            this.board6.Location = new System.Drawing.Point(11, 101);
+            this.board6.Name = "board6";
+            this.board6.Size = new System.Drawing.Size(30, 30);
+            this.board6.TabIndex = 212;
+            this.board6.TabStop = false;
+            // 
+            // boardDisplay
+            // 
+            this.boardDisplay.Controls.Add(this.board4);
+            this.boardDisplay.Controls.Add(this.board8);
+            this.boardDisplay.Controls.Add(this.board0);
+            this.boardDisplay.Controls.Add(this.board7);
+            this.boardDisplay.Controls.Add(this.board1);
+            this.boardDisplay.Controls.Add(this.board6);
+            this.boardDisplay.Controls.Add(this.board2);
+            this.boardDisplay.Controls.Add(this.board5);
+            this.boardDisplay.Controls.Add(this.board3);
+            this.boardDisplay.Location = new System.Drawing.Point(17, 325);
+            this.boardDisplay.Name = "boardDisplay";
+            this.boardDisplay.Size = new System.Drawing.Size(127, 148);
+            this.boardDisplay.TabIndex = 215;
+            this.boardDisplay.TabStop = false;
+            // 
+            // currentImageBox
+            // 
+            this.currentImageBox.Location = new System.Drawing.Point(335, 268);
+            this.currentImageBox.Name = "currentImageBox";
+            this.currentImageBox.Size = new System.Drawing.Size(741, 456);
+            this.currentImageBox.TabIndex = 216;
+            this.currentImageBox.TabStop = false;
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 1000;
+            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(227, 325);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(44, 20);
+            this.textBox4.TabIndex = 217;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(227, 364);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(44, 20);
+            this.textBox5.TabIndex = 218;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(227, 400);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(44, 20);
+            this.textBox6.TabIndex = 219;
+            // 
+            // debuggingTextBox
+            // 
+            this.debuggingTextBox.Location = new System.Drawing.Point(1113, 268);
+            this.debuggingTextBox.Multiline = true;
+            this.debuggingTextBox.Name = "debuggingTextBox";
+            this.debuggingTextBox.Size = new System.Drawing.Size(264, 401);
+            this.debuggingTextBox.TabIndex = 220;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 571);
+            this.ClientSize = new System.Drawing.Size(1551, 736);
+            this.Controls.Add(this.debuggingTextBox);
+            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.currentImageBox);
+            this.Controls.Add(this.boardDisplay);
+            this.Controls.Add(this.drawSquareButton);
+            this.Controls.Add(this.readyTextBox);
+            this.Controls.Add(this.drawTriangleButton);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.yPositionTextBox);
             this.Controls.Add(this.OriginButton);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.moveYButton);
@@ -559,22 +671,8 @@
             this.Controls.Add(this.stopStepperButton);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.encBox3);
-            this.Controls.Add(this.revRateBox);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.rotCountBox);
-            this.Controls.Add(this.encBox5);
-            this.Controls.Add(this.encBox4);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.pwmBox);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.encBox2);
-            this.Controls.Add(this.encBox1);
+            this.Controls.Add(this.xPositionTextBox);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.fullByteBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -599,6 +697,17 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.board6)).EndInit();
+            this.boardDisplay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.currentImageBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -624,26 +733,12 @@
         private System.Windows.Forms.TextBox byte2Box;
         private System.Windows.Forms.TextBox byte1Box;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox fullByteBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.TextBox revRateBox;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox rotCountBox;
-        private System.Windows.Forms.TextBox encBox5;
-        private System.Windows.Forms.TextBox encBox4;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox pwmBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox encBox2;
-        private System.Windows.Forms.TextBox encBox1;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox encBox3;
+        private System.Windows.Forms.TextBox xPositionTextBox;
         private System.Windows.Forms.Button runStepperNegativeButton;
         private System.Windows.Forms.Button runStepperPositive;
         private System.Windows.Forms.Button stopStepperButton;
@@ -659,6 +754,29 @@
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button OriginButton;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox yPositionTextBox;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button drawTriangleButton;
+        private System.Windows.Forms.TextBox readyTextBox;
+        private System.Windows.Forms.Button drawSquareButton;
+        private System.Windows.Forms.PictureBox board0;
+        private System.Windows.Forms.PictureBox board1;
+        private System.Windows.Forms.PictureBox board2;
+        private System.Windows.Forms.PictureBox board5;
+        private System.Windows.Forms.PictureBox board4;
+        private System.Windows.Forms.PictureBox board3;
+        private System.Windows.Forms.PictureBox board8;
+        private System.Windows.Forms.PictureBox board7;
+        private System.Windows.Forms.PictureBox board6;
+        private System.Windows.Forms.GroupBox boardDisplay;
+        private System.Windows.Forms.PictureBox currentImageBox;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox debuggingTextBox;
     }
 }
 

@@ -8,6 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Concurrent;
+using System.Threading;
+using Emgu.CV;
+using Emgu.CV.Util;
+using Emgu.CV.Structure;
+
+
+using System.Diagnostics;
+
+
 
 namespace tictactoe_robot
 {
@@ -15,13 +24,22 @@ namespace tictactoe_robot
     {
         ConcurrentQueue<Int32> dataQueue = new ConcurrentQueue<Int32>();
 
+        int[,] gamestate = new int[3, 3];
+
+        // Current player state variable
+        // 0: Human
+        // 1: Computer
+        int currentPlayer = 0;
+
+        int dataState = 0;
+        int newByte = 0;
+
+        int x_pos = 100;
+        int y_pos = 100;
+
+      
+           
         
-        int encoderUpper = 0;
-        int encoderLower = 0;
-
-        int position = 0;
-
-        int rotationCount = 0;
 
 
         public Form1()
@@ -52,6 +70,28 @@ namespace tictactoe_robot
 
             deltaXBox.Text = "0";
             deltaYBox.Text = "0";
+
+            // Initialize board display
+            for(int i = 0; i < 3; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    gamestate[i, j] = 0;
+                }
+            }
+
+            UpdateGameState();
+
+
+
+
+
+           
+
+
+
+
+
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -72,6 +112,7 @@ namespace tictactoe_robot
                 // Port is open - close port and change button text to "Connect"
                 serialPort1.Close();
                 connectButton.Text = "Connect Serial";
+                timer1.Enabled = false;
             }
 
             timer1.Enabled = true;
@@ -107,6 +148,20 @@ namespace tictactoe_robot
             {
                 MessageBox.Show(Ex.Message);
             }
+        }
+
+        private void SerialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            int bytesToRead = serialPort1.BytesToRead;
+
+            while (bytesToRead != 0)
+            {
+                newByte = serialPort1.ReadByte();
+                dataQueue.Enqueue(newByte);
+                // Check if there are still bytes to read
+                bytesToRead = serialPort1.BytesToRead;
+            }
+
         }
 
         private void TrackBar1_Scroll(object sender, EventArgs e)
@@ -179,15 +234,15 @@ namespace tictactoe_robot
             int fullByteHigh = Convert.ToInt32(upperBytes) << 8;
 
             int fullByte = fullByteHigh |= Convert.ToInt32(lowerBytes);
-            fullByteBox.Text = fullByte.ToString();
+            //fullByteBox.Text = fullByte.ToString();
 
             byte6Box.Text = "0";
             byte7Box.Text = "0";
 
             SendBytes();
         }
-
-        void SendBytes()
+       
+        private void SendBytes()
         {
             byte[] TxBytes = new Byte[7];
 
@@ -225,49 +280,44 @@ namespace tictactoe_robot
             }
         }
 
-        
-
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            int previousPosition = position;
-
-            encBox1.Text = encoderUpper.ToString();
-            encBox2.Text = encoderLower.ToString();
-
-            int upperBinary = ConvertToBinary(encoderUpper);
-            int lowerBinary = ConvertToBinary(encoderLower);
-
-            string upperBinaryString = upperBinary.ToString();
-            string lowerBinaryString = lowerBinary.ToString();
-
-            if (upperBinaryString.Length < 8)
+            if (serialPort1.IsOpen)
             {
-                for (int s = upperBinaryString.Length; s < 8; s++)
+                foreach (int i in dataQueue)
                 {
-                    upperBinaryString = "0" + upperBinaryString;
+                    // Dequeue all data in dataQueue byte by byte and store in value
+                    dataQueue.TryDequeue(out int value);
+
+                    switch (dataState)
+                    {
+                        case 0:
+                            if (value == 255)
+                            {
+                                textBox1.Text = value.ToString();
+                                dataState = 1;
+                            }
+                            break;
+
+                        case 1:
+                            x_pos = value;
+                            xPositionTextBox.Text = value.ToString();
+                            textBox2.Text = value.ToString();
+                            dataState = 2;
+                            break;
+
+                        case 2:
+                            y_pos = value;
+                            yPositionTextBox.Text = value.ToString();
+                            textBox3.Text = value.ToString();
+                            dataState = 0;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
-            if (lowerBinaryString.Length < 8)
-            {
-                for (int s = lowerBinaryString.Length; s < 8; s++)
-                {
-                    lowerBinaryString = "0" + lowerBinaryString;
-                }
-            }
-
-            position = Convert.ToInt32(upperBinaryString + lowerBinaryString, 2) + rotationCount * 50000;
-            encBox3.Text = position.ToString();
-
-            encBox4.Text = upperBinaryString;
-            encBox5.Text = lowerBinaryString;
-
-            pwmBox.Text = trackBar1.Value.ToString();
-            rotCountBox.Text = rotationCount.ToString();
-
-            int revRate = position - previousPosition;
-            revRateBox.Text = revRate.ToString();
-
-
         }
 
         private int ConvertToBinary(int num)
@@ -391,6 +441,7 @@ namespace tictactoe_robot
 
         private void MovePlatform(int delta_x, int delta_y)
         {
+           
             int xDirection = 0;
             int yDirection = 0;
 
@@ -399,27 +450,28 @@ namespace tictactoe_robot
             byte4Box.Text = "0";
             byte5Box.Text = "0";
 
-            if (delta_x < 0)            {
-                byte6Box.Text = (2 * (-delta_x)).ToString();
+            if (delta_x < 0)
+            {
+                byte6Box.Text = (-delta_x).ToString();
                 xDirection = 0;
             }
 
             else if (delta_x > 0)
             {
-                byte6Box.Text = (2 * (delta_x)).ToString();
+                byte6Box.Text = (delta_x).ToString();
                 xDirection = 1;
             }
 
 
             if (delta_y < 0)
             {
-                byte7Box.Text = (2 * (-delta_y)).ToString();
+                byte7Box.Text = (-delta_y).ToString();
                 yDirection = 0;
             }
 
             else if (delta_y > 0)
             {
-                byte7Box.Text = (2 * (delta_y)).ToString();
+                byte7Box.Text = (delta_y).ToString();
                 yDirection = 1;
 
             }
@@ -453,10 +505,14 @@ namespace tictactoe_robot
 
             }
 
-            if (deltaYBox.Text == "0")
+            if (delta_y == 0)
             {
-                if (deltaXBox.Text == "0")
+
+                byte7Box.Text = "0";
+
+                if (delta_x == 0)
                 {
+                    byte6Box.Text = "0";
                     byte3Box.Text = "0";
                 }
 
@@ -473,7 +529,238 @@ namespace tictactoe_robot
             }
 
             SendBytes();
+
+            readyTextBox.Text = "Ready";
         }
 
+        private void DrawTriangle(int x_start, int y_start)
+        {
+
+           
+            MovePlatform(5, 5);
+
+
+            Thread.Sleep(5000);
+
+            MovePlatform(5, -5);
+
+            Thread.Sleep(5000);
+
+            MovePlatform(-10, 0);
+
+            //while ((x_pos != (x_start + 10)) && (y_pos != (y_start))) {
+            //    Thread.Sleep(1000);
+            //};
+
+            //MovePlatform(-10, 0);
+
+            //while ((x_pos != (x_start)) && (y_pos != (y_start))) { };
+        }
+
+        private void DrawSquare(int x_start, int y_start)
+        {
+            MovePlatform(0, 8);
+
+
+            Thread.Sleep(5000);
+
+            MovePlatform(8, 0);
+
+            Thread.Sleep(5000);
+
+            MovePlatform(0, -8);
+
+
+            Thread.Sleep(5000);
+
+            MovePlatform(-8, 0);
+        }
+        private void DrawTriangleButton_Click(object sender, EventArgs e)
+        {
+            DrawTriangle(x_pos, y_pos);
+
+        }
+
+        private void DrawSquareButton_Click(object sender, EventArgs e)
+        {
+            DrawSquare(x_pos, y_pos);
+        }
+
+        private void UpdateGameState()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                foreach (PictureBox pb in boardDisplay.Controls.OfType<PictureBox>())
+                {
+                    if (pb.Name.Equals("board" + i.ToString()))
+                    {
+                        if (gamestate[i/3,i%3] == 1)
+                        {
+                            pb.Image = Image.FromFile("..\\..\\images\\sq.png");
+                        }
+
+                        else if (gamestate[i / 3, i % 3] == -1)
+                        {
+                            pb.Image = Image.FromFile("..\\..\\images\\o.png");
+                        }
+
+                        else
+                        {
+                            pb.Image = Image.FromFile("..\\..\\images\\empty.png");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            Mat img = Emgu.CV.CvInvoke.Imread("..\\..\\images\\board-m01.png");
+
+            //currentImageBox.Image = img.ToBitmap();
+
+            ParseImage(img);
+        }
+
+        void ParseImage(Mat img)
+        {
+
+            Mat gray = new Mat();
+            Mat filtered = new Mat();
+            Mat edged = new Mat();
+
+            VectorOfPoint approx = new VectorOfPoint();
+
+            MCvScalar color = new MCvScalar(0, 255, 255);
+            
+
+            CvInvoke.CvtColor(img, gray, Emgu.CV.CvEnum.ColorConversion.Rgb2Gray);
+            
+            CvInvoke.BilateralFilter(gray, filtered, 25, 20, 20);
+            
+            CvInvoke.Canny(filtered, edged, 30, 200);
+            
+
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            Mat m = new Mat();
+
+            CvInvoke.FindContours(edged, contours, m, Emgu.CV.CvEnum.RetrType.Tree, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+
+            textBox5.Text = contours.Size.ToString();
+            
+            // Extracting board from image
+            for (int i = 0; i < contours.Size; i++)
+            {
+                VectorOfPoint c = contours[i];
+               
+
+                double peri = CvInvoke.ArcLength(c, true);
+                CvInvoke.ApproxPolyDP(c, approx,  peri * 0.1, true);
+
+                if(CvInvoke.ContourArea(approx, false) > 1)
+                {
+                    if(approx.Size == 4)
+                    {
+                        textBox6.Text = "REACHED!";
+                        Point[] pts = approx.ToArray();
+
+                        CvInvoke.DrawContours(img, contours, i, new MCvScalar(0, 0, 255), 2);
+                        currentImageBox.Image = img.ToBitmap();
+                        
+                        break;                    
+                       
+                        
+                    }
+                }
+
+                
+            }
+
+
+            // Separating board into 9 sections
+
+            // Displaying coordinates of board in textbox
+            debuggingTextBox.Clear();
+
+            debuggingTextBox.AppendText("Board Coordinates \r\n");
+            
+            for (int i = 0; i < approx.Size; i++)
+            {
+                debuggingTextBox.AppendText(approx[i].ToString() + "\r\n");
+            }
+
+            int boardWidth = approx[0].X - approx[1].X;
+            int boardHeight = approx[2].Y - approx[0].Y;
+
+            Mat board = new Mat(img,new Rectangle(approx[1].X,approx[0].Y,boardWidth,boardHeight));
+
+            // Display board image
+            currentImageBox.Image = board.ToBitmap();
+
+
+            int segWidth = boardWidth / 3;
+            int segHeight = boardHeight / 3;
+
+            int padding = 10;
+
+            for(int i = 0; i < 3; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    Mat segment = new Mat(board, new Rectangle((j * segWidth + padding), (i * segHeight + padding), segWidth - 2 * padding, segHeight - 2 * padding));
+
+                    // Look for square within segment
+
+                    Mat segGray = new Mat();
+                    Mat segFiltered = new Mat();
+                    Mat segEdged = new Mat();
+
+                    VectorOfPoint segApprox = new VectorOfPoint();
+
+
+                    CvInvoke.CvtColor(segment, segGray, Emgu.CV.CvEnum.ColorConversion.Rgb2Gray);
+
+                    CvInvoke.BilateralFilter(segGray, segFiltered, 25, 20, 20);
+
+                    CvInvoke.Canny(segFiltered, segEdged, 30, 200);
+
+
+                    VectorOfVectorOfPoint segContours = new VectorOfVectorOfPoint();
+
+                    CvInvoke.FindContours(segEdged, segContours, m, Emgu.CV.CvEnum.RetrType.Tree, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+
+                    for (int k = 0; k < segContours.Size; k++)
+                    {
+                        VectorOfPoint c = contours[k];
+
+
+                        double peri = CvInvoke.ArcLength(c, true);
+                        CvInvoke.ApproxPolyDP(c, segApprox, peri * 0.1, true);
+
+                        if (CvInvoke.ContourArea(segApprox, false) > 1)
+                        {
+                            if (approx.Size == 4)
+                            {
+                                textBox6.Text = "REACHED!";
+                                Point[] pts = approx.ToArray();
+
+                                CvInvoke.DrawContours(img, contours, i, new MCvScalar(0, 0, 255), 2);
+
+                                gamestate[i,j] = 1;
+
+                            }
+                        }
+
+
+                    }
+
+                }
+            }
+
+
+            UpdateGameState();
+        }
+
+        
     }
 }
